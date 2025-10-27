@@ -1,27 +1,44 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Bootstrap refactor — custom tweaks (PATCHED) */
 
+/* Focus ring */
 *:focus:not(ol) {
-  @apply outline-none ring-2 ring-cyan-400 border-cyan-400;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.5) !important;
+  border-color: rgba(13, 202, 240, 1) !important;
 }
 
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  text-indent: 1px;
-  text-overflow: '';
+/* Remove scrollbar when desired */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Calendar helpers */
+.calendar-container { max-height: 100%; overflow-y: auto; }
+
+/* 7-column grid */
+.grid-7 { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0; }
+
+/* Day cell */
+.calendar-day { position: relative; cursor: pointer; }
+.calendar-square { aspect-ratio: 1 / 1; border: 1px solid rgba(0,0,0,.125); border-radius: 1rem; transition: border-color .15s ease-in-out, box-shadow .15s; margin: -1px; }
+.calendar-square:hover { z-index: 2; border-color: #0dcaf0; }
+
+/* Day number */
+.calendar-day .day-number {
+  position: absolute; left: .5rem; top: .5rem; width: 2rem; height: 2rem;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 999px; font-size: .9rem; font-weight: 600;
+}
+@media (min-width: 992px) {
+  .calendar-day .day-number { left: .75rem; top: .75rem; width: 2.25rem; height: 2.25rem; font-size: 1rem; }
 }
 
-@layer utilities {
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-}
+/* Month label */
+.calendar-day .month-label { position: absolute; left: .5rem; bottom: .35rem; font-weight: 700; color: #cbd5e1; }
+@media (min-width: 992px) { .calendar-day .month-label { left: 1rem; bottom: .75rem; font-size: 1.1rem; } }
+
+/* Add button reveal */
+.calendar-day .add-btn { position: absolute; right: .5rem; top: .5rem; opacity: 0; transition: opacity .15s, transform .15s; }
+.calendar-day:focus-within .add-btn, .calendar-day:hover .add-btn { opacity: 1; }
+
+/* Demo wrapper full height */
+.fullscreen { height: 100vh; max-height: 100vh; }
